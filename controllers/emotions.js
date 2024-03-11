@@ -58,4 +58,23 @@ const deleteEmotion = (req, res) => {
     res.status(200).json({ success: true, data: newEmotion })
 }
 
-module.exports = { getEmotions, createEmotions, updateEmotion, deleteEmotion }
+const getSingleEmotion = (req, res) => {
+    const { id } = req.params
+
+    const singleEmotion = emotions.find((emotion) => emotion.id === Number(id))
+
+    if (!singleEmotion) {
+        return res
+            .status(404)
+            .json({ success: false, msg: 'Requested emotion does not exist' })
+    }
+    res.status(200).json({ success: true, data: singleEmotion })
+}
+
+module.exports = {
+    getEmotions,
+    createEmotions,
+    updateEmotion,
+    deleteEmotion,
+    getSingleEmotion
+}
