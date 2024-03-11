@@ -23,3 +23,5 @@ const emotions = [
         description: 'super shy'
     }
 ]
+
+module.exports = emotions
