@@ -1,4 +1,4 @@
-const emotions = require('../data')
+let emotions = require('../data')
 
 const getEmotions = (req, res) => {
     res.status(200).json({ success: true, data: emotions })
@@ -42,4 +42,20 @@ const updateEmotion = (req, res) => {
     res.status(200).json({ success: true, data: newEmotion })
 }
 
-module.exports = { getEmotions, createEmotions, updateEmotion }
+const deleteEmotion = (req, res) => {
+    const { id } = req.params
+
+    const emotion = emotions.find((emotion) => emotion.id === Number(id))
+
+    if (!emotion) {
+        return res
+            .status(404)
+            .json({ success: false, msg: `no emotion with id: ${id}` })
+    }
+
+    const newEmotion = emotions.filter((emotion) => emotion.id !== Number(id))
+
+    res.status(200).json({ success: true, data: newEmotion })
+}
+
+module.exports = { getEmotions, createEmotions, updateEmotion, deleteEmotion }
