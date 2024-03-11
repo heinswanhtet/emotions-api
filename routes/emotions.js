@@ -1,8 +1,8 @@
 const express = require('express')
-const { getEmotions } = require('../controllers/emotions')
+const { getEmotions, createEmotions } = require('../controllers/emotions')
 
 const router = express.Router()
 
-router.route('/').get(getEmotions)
+router.route('/').get(getEmotions).post(createEmotions)
 
 module.exports = router
