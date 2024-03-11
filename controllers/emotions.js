@@ -15,4 +15,31 @@ const createEmotions = (req, res) => {
     res.status(201).json({ success: true, data: [...emotions, { id, type, description }] })
 }
 
-module.exports = { getEmotions, createEmotions }
+const updateEmotion = (req, res) => {
+    const { id } = req.params
+    const { type, description } = req.body
+
+    const emotion = emotions.find((emotion) => emotion.id === Number(id))
+
+    if (!emotion) {
+        return res
+            .status(404)
+            .json({ success: false, msg: `no emotion with id: ${id}` })
+    }
+
+    const newEmotion = emotions.map((emotion) => {
+        if (emotion.id === Number(id)) {
+            if (type) {
+                emotion.type = type
+            }
+            if (description) {
+                emotion.description = description
+            }
+        }
+        return emotion
+    })
+
+    res.status(200).json({ success: true, data: newEmotion })
+}
+
+module.exports = { getEmotions, createEmotions, updateEmotion }
